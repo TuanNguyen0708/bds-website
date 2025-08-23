@@ -92,11 +92,11 @@ const LocationSection = () => {
             <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
               <div className="p-6 border-b border-gray-200">
                 <h4 className="text-xl font-bold text-gray-900 mb-2">Vị Trí Dự Án</h4>
-                <p className="text-gray-600">Regal Complex Đà Nẵng - Khu đô thị Phú Mỹ An</p>
+                <p className="text-gray-600">Regal Complex Đà Nẵng </p>
               </div>
               <div className="aspect-square w-full">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.738123456789!2d108.12345678901234!3d15.98765432109876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDU5JzE1LjYiTiAxMDjCsDA3JzM0LjQiRQ!5e0!3m2!1svi!2s!4v1234567890123"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.2882847600686!2d108.25949608474183!3d15.988799888665394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142111bee4763d1%3A0x37cd0578ad748341!2sRegal%20Complex!5e1!3m2!1svi!2s!4v1755919947626!5m2!1svi!2s"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -109,7 +109,7 @@ const LocationSection = () => {
               </div>
               <div className="p-4 bg-gray-50">
                 <div className="flex items-center justify-between text-sm text-gray-600">
-                  <span>📍 Đường Đào Duy Tùng, Phú Mỹ An</span>
+                  <span>📍 Đường Đào Duy Tùng, Ngũ Hành Sơn, Đà Nẵng</span>
                   <a 
                     href="https://maps.google.com/?q=Regal+Complex+Da+Nang+Phu+My+An+Da+Nang" 
                     target="_blank" 
