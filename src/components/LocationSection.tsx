@@ -82,7 +82,7 @@ const LocationSection = () => {
               </p>
 
               <p className="text-lg">
-                Hãy hành động ngay hôm nay để không bỏ lỡ cơ hội đầu tư "vàng son" tại Regal Complex Đà Nẵng – nơi đỉnh cao của phong cách sống hiện đại và giá trị trường tồn theo thời gian với những cung bật cảm xúc tuyệt đối với chuỗi Luxury Condo Danang có 1-0-2.
+                Hãy hành động ngay hôm nay để không bỏ lỡ cơ hội đầu tư &ldquo;vàng son&rdquo; tại Regal Complex Đà Nẵng – nơi đỉnh cao của phong cách sống hiện đại và giá trị trường tồn theo thời gian với những cung bật cảm xúc tuyệt đối với chuỗi Luxury Condo Danang có 1-0-2.
               </p>
             </div>
           </div>
