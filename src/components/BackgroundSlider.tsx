@@ -1,15 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { getAssetPath } from '@/lib/utils'
 
 const BackgroundSlider = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   
   const images = [
-    '/images/homepage/home1.jpg',
-    '/images/homepage/home2.jpg',
-    '/images/homepage/home3.jpg',
-    '/images/homepage/home4.jpg'
+    getAssetPath('/images/homepage/home1.jpg'),
+    getAssetPath('/images/homepage/home2.jpg'),
+    getAssetPath('/images/homepage/home3.jpg'),
+    getAssetPath('/images/homepage/home4.jpg')
   ]
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const BackgroundSlider = () => {
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               index === currentImageIndex 
                 ? 'bg-white scale-125' 
-                : 'bg-white/50 hover:bg-white/75'
+                : 'bg-white/75 hover:bg-white/75'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
