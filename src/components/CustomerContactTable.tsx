@@ -27,12 +27,12 @@ import {
   Calendar,
   User
 } from "lucide-react";
-import { getContacts, ContactData, FilterOptions, PaginationOptions } from "@/lib/contactService";
+import { getContacts, ContactData, FilterOptions } from "@/lib/contactService";
 import ContactDetailDialog from "./ContactDetailDialog";
 
 // Debounce hook để tránh gọi API quá nhiều
-const useDebounce = (value: unknown, delay: number) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+const useDebounce = (value: FilterOptions, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState<FilterOptions>(value);
 
   useEffect(() => {
     const handler = setTimeout(() => {
