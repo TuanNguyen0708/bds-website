@@ -24,7 +24,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
@@ -182,30 +182,10 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col justify-between items-center">
             <p className="text-gray-400 text-sm">
               © {currentYear} Phu Nguyen Land. Tất cả quyền được bảo lưu.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
-              >
-                Chính sách bảo mật
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
-              >
-                Điều khoản sử dụng
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
-              >
-                Sitemap
-              </a>
-            </div>
           </div>
         </div>
       </div>

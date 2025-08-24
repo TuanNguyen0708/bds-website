@@ -19,10 +19,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Facebook, Twitter } from "lucide-react";
+import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { submitContactForm, ContactFormData } from "@/lib/contactService";
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     phone: "",
@@ -30,10 +31,43 @@ const ContactSection = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
+    
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      await submitContactForm(formData);
+      setSubmitStatus({
+        type: 'success',
+        message: 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.'
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Có lỗi xảy ra. Vui lòng thử lại.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (field: string, value: string) => {
@@ -133,6 +167,22 @@ const ContactSection = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {/* Status Messages */}
+                {submitStatus.type && (
+                  <div className={`mb-6 p-4 rounded-lg flex items-center space-x-3 ${
+                    submitStatus.type === 'success' 
+                      ? 'bg-green-50 text-green-800 border border-green-200' 
+                      : 'bg-red-50 text-red-800 border border-red-200'
+                  }`}>
+                    {submitStatus.type === 'success' ? (
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 text-red-600" />
+                    )}
+                    <span className="text-sm font-medium">{submitStatus.message}</span>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -143,6 +193,7 @@ const ContactSection = () => {
                         onChange={(e) => handleChange("name", e.target.value)}
                         placeholder="Nhập họ và tên"
                         required
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div className="space-y-2">
@@ -154,6 +205,7 @@ const ContactSection = () => {
                         onChange={(e) => handleChange("phone", e.target.value)}
                         placeholder="Nhập số điện thoại"
                         required
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -167,6 +219,7 @@ const ContactSection = () => {
                       onChange={(e) => handleChange("email", e.target.value)}
                       placeholder="Nhập email"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -175,6 +228,7 @@ const ContactSection = () => {
                     <Select
                       value={formData.service}
                       onValueChange={(value) => handleChange("service", value)}
+                      disabled={isSubmitting}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Chọn dịch vụ" />
@@ -203,14 +257,23 @@ const ContactSection = () => {
                       onChange={(e) => handleChange("message", e.target.value)}
                       placeholder="Mô tả nhu cầu của bạn"
                       rows={4}
+                      disabled={isSubmitting}
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isSubmitting}
                   >
-                    Gửi tin nhắn
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Đang gửi...
+                      </>
+                    ) : (
+                      'Gửi tin nhắn'
+                    )}
                   </Button>
                 </form>
               </CardContent>
@@ -306,7 +369,7 @@ const ContactSection = () => {
                       opacity=".05"
                     ></path>
                     <path
-                      d="M34.992,17.792c-0.319,0-0.63,0.107-0.899,0.31l-5.697,4.218	c-0.216,0.163-0.468,0.248-0.732,0.248c-0.259,0-0.504-0.082-0.71-0.236l-3.973-2.991c-0.719-0.535-1.568-0.817-2.457-0.817	c-1.405,0-2.696,0.705-3.455,1.887l-1.21,1.891l-4.115,6.688c-0.297,0.465-0.32,1.033-0.058,1.511c0.266,0.486,0.787,0.8,1.325,0.8	c0.319,0,0.63-0.107,0.899-0.31l5.697-4.218c0.216-0.163,0.468-0.248,0.732-0.248c0.259,0,0.504,0.082,0.71,0.236l3.973,2.991	c0.719,0.535,1.568,0.817,2.457,0.817c1.405,0,2.696-0.705,3.455-1.887l1.21-1.891l4.115-6.688c0.297-0.465,0.32-1.033,0.058-1.511	C36.051,18.106,35.531,17.792,34.992,17.792L34.992,17.792z"
+                      d="M34.992,17.792c-0.319,0-0.63,0.107-0.899,0.31l-5.697,4.218	c-0.216,0.163-0.468,0.248-0.732,0.248c-0.259,0-0.504-0.082-0.71-0.236l-3.973-2.991c-0.719-0.535-1.568-0.817-2.457-0.817	c-1.405,0-2.696,0.705-3.455,1.887l-1.21,1.891l-4.115,6.688c-0.297,0.465-0.32,1.033-0.058,1.511c0.266,0.486,0.787,0.8,1.325,0.8	c0.319,0,0.63-0.107,0.899-0.31l5.697-4.218c0.216-0.163,0.468-0.248,0.732-0.248c0.259,0,0.504,0.082,0.71,0.236l3.973,2.99	c0.719,0.535,1.568,0.817,2.457,0.817c1.405,0,2.696-0.705,3.455-1.887l1.21-1.891l4.115-6.688c0.297-0.465,0.32-1.033,0.058-1.511	C36.051,18.106,35.531,17.792,34.992,17.792L34.992,17.792z"
                       opacity=".07"
                     ></path>
                     <path
