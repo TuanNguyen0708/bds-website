@@ -67,7 +67,7 @@ const Header = () => {
                     </a>
                   ))}
                   <div className="pt-4">
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setIsOpen(false)}>
                       <a href="#contact">Liên hệ ngay</a>
                     </Button>
                   </div>
