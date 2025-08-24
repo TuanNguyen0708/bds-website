@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // output: 'export', // Comment out for Firebase support
+  output: 'export', // Bật lại để tạo static files cho GitHub Pages
   trailingSlash: true,
   images: {
     unoptimized: true,
