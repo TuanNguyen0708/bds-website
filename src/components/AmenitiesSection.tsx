@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getAssetPath } from "@/lib/utils";
 
 interface AmenityItem {
   title: string;
@@ -22,21 +23,21 @@ const AmenitiesSection = () => {
           description:
             "Diện tích 10.000 m², tích hợp các dịch vụ giải trí, ẩm thực, giáo dục và chăm sóc sức khỏe.",
           icon: "🏢",
-          image: "/images/amenities/commercial/commercial-center.jpg",
+          image: getAssetPath("/images/amenities/commercial/commercial-center.jpg"),
         },
         {
           title: "Sky bar và nhà hàng",
           description:
             "Tọa lạc trên cao, mang đến trải nghiệm ẩm thực với tầm nhìn toàn cảnh thành phố.",
           icon: "🍽️",
-          image: "/images/amenities/commercial/sky-bar-restaurant.jpg",
+          image: getAssetPath("/images/amenities/commercial/sky-bar-restaurant.jpg"),
         },
         {
           title: "Quảng trường ánh sáng",
           description:
             "Điểm nhấn kiến trúc với đài phun nước, tháp đồng hồ và bến du thuyền mini.",
           icon: "✨",
-          image: "/images/amenities/commercial/light-square.jpg",
+          image: getAssetPath("/images/amenities/commercial/light-square.jpg"),
         },
       ],
     },
@@ -48,19 +49,19 @@ const AmenitiesSection = () => {
           description:
             "Thiết kế hiện đại, là nơi thư giãn lý tưởng với view biển tuyệt đẹp.",
           icon: "🏊‍♂️",
-          image: "/images/amenities/sports/swimming-pool.jpg",
+          image: getAssetPath("/images/amenities/sports/swimming-pool.jpg"),
         },
         {
           title: "Phòng tập gym cao cấp",
           description: "Trang thiết bị hiện đại, phục vụ 24/7 cho cư dân.",
           icon: "💪",
-          image: "/images/amenities/sports/gym.jpg",
+          image: getAssetPath("/images/amenities/sports/gym.jpg"),
         },
         {
           title: "Spa & Wellness",
           description: "Dịch vụ chăm sóc sức khỏe và thư giãn đẳng cấp 5 sao.",
           icon: "🧘‍♀️",
-          image: "/images/amenities/sports/spa.jpg",
+          image: getAssetPath("/images/amenities/sports/spa.jpg"),
         },
       ],
     },
@@ -72,21 +73,21 @@ const AmenitiesSection = () => {
           description:
             "Khu vui chơi trong nhà dành cho trẻ em, kết hợp giáo dục và giải trí sáng tạo.",
           icon: "🎨",
-          image: "/images/amenities/family/kids-art.jpg",
+          image: getAssetPath("/images/amenities/family/kids-art.jpg"),
         },
         {
           title: "Vườn trẻ em",
           description:
             "Không gian vui chơi ngoài trời an toàn với các thiết bị hiện đại.",
           icon: "🌳",
-          image: "/images/amenities/family/children-garden.jpg",
+          image: getAssetPath("/images/amenities/family/children-garden.jpg"),
         },
         {
           title: "Phòng sinh hoạt cộng đồng",
           description:
             "Nơi tổ chức các hoạt động văn hóa, giao lưu giữa các cư dân.",
           icon: "🏠",
-          image: "/images/amenities/family/community-room.jpg",
+          image: getAssetPath("/images/amenities/family/community-room.jpg"),
         },
       ],
     },
@@ -98,20 +99,20 @@ const AmenitiesSection = () => {
           description:
             "Không gian xanh mát với hệ thống cây xanh, hoa cỏ được chăm sóc chu đáo.",
           icon: "🌿",
-          image: "/images/amenities/landscape/green-park.jpg",
+          image: getAssetPath("/images/amenities/landscape/green-park.jpg"),
         },
         {
           title: "Hồ cảnh quan",
           description: "Hồ nước tạo điểm nhấn thẩm mỹ và điều hòa không khí.",
           icon: "💧",
-          image: "/images/amenities/landscape/landscape-lake.jpg",
+          image: getAssetPath("/images/amenities/landscape/landscape-lake.jpg"),
         },
         {
           title: "Đường đi bộ ven biển",
           description:
             "Lối đi bộ dọc bờ biển, nơi thư giãn và tập thể dục lý tưởng.",
           icon: "🚶‍♂️",
-          image: "/images/amenities/landscape/beach-walkway.jpg",
+          image: getAssetPath("/images/amenities/landscape/beach-walkway.jpg"),
         },
       ],
     },
