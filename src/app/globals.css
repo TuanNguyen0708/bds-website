@@ -111,4 +111,302 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
   }
+
+  /* Contact buttons animations */
+  .contact-button-pulse {
+    animation: contactPulse 2s infinite;
+  }
+
+  @keyframes contactPulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+  }
+
+  /* Glow effects for contact buttons */
+  .zalo-glow {
+    animation: zaloGlow 2s ease-in-out infinite alternate;
+  }
+
+  .call-glow {
+    animation: callGlow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes zaloGlow {
+    0% {
+      box-shadow: 0 0 5px rgba(0, 104, 255, 0.5), 0 0 10px rgba(0, 104, 255, 0.3), 0 0 15px rgba(0, 104, 255, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 10px rgba(0, 104, 255, 0.8), 0 0 20px rgba(0, 104, 255, 0.6), 0 0 30px rgba(0, 104, 255, 0.4);
+    }
+    100% {
+      box-shadow: 0 0 15px rgba(0, 104, 255, 0.9), 0 0 25px rgba(0, 104, 255, 0.7), 0 0 35px rgba(0, 104, 255, 0.5);
+    }
+  }
+
+  @keyframes callGlow {
+    0% {
+      box-shadow: 0 0 5px rgba(34, 197, 94, 0.5), 0 0 10px rgba(34, 197, 94, 0.3), 0 0 15px rgba(34, 197, 94, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8), 0 0 20px rgba(34, 197, 94, 0.6), 0 0 30px rgba(34, 197, 94, 0.4);
+    }
+    100% {
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.9), 0 0 25px rgba(34, 197, 94, 0.7), 0 0 35px rgba(34, 197, 94, 0.5);
+    }
+  }
+
+  /* Enhanced hover effects */
+  .contact-button:hover {
+    animation-play-state: paused;
+  }
+
+  .contact-button:hover.zalo-glow {
+    box-shadow: 0 0 20px rgba(0, 104, 255, 1), 0 0 30px rgba(0, 104, 255, 0.8), 0 0 40px rgba(0, 104, 255, 0.6);
+  }
+
+  .contact-button:hover.call-glow {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 1), 0 0 30px rgba(34, 197, 94, 0.8), 0 0 40px rgba(34, 197, 94, 0.6);
+  }
+
+  /* Ripple effect on click */
+  .contact-button:active {
+    transform: scale(0.95);
+  }
+
+  /* Floating animation */
+  .contact-buttons {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Staggered animation for buttons */
+  .zalo-glow {
+    animation-delay: 0s;
+  }
+
+  .call-glow {
+    animation-delay: 0.5s;
+  }
+
+  /* Shake animations for icons */
+  .zalo-shake {
+    animation: zaloShake 3s ease-in-out infinite;
+  }
+
+  .call-shake {
+    animation: callShake 4s ease-in-out infinite;
+  }
+
+  @keyframes zaloShake {
+    0%, 90%, 100% {
+      transform: translateX(0) rotate(0deg);
+    }
+    92% {
+      transform: translateX(-2px) rotate(-1deg);
+    }
+    94% {
+      transform: translateX(2px) rotate(1deg);
+    }
+    96% {
+      transform: translateX(-1px) rotate(-0.5deg);
+    }
+    98% {
+      transform: translateX(1px) rotate(0.5deg);
+    }
+  }
+
+  @keyframes callShake {
+    0%, 85%, 100% {
+      transform: translateX(0) rotate(0deg);
+    }
+    87% {
+      transform: translateX(-3px) rotate(-2deg);
+    }
+    89% {
+      transform: translateX(3px) rotate(2deg);
+    }
+    91% {
+      transform: translateX(-2px) rotate(-1deg);
+    }
+    93% {
+      transform: translateX(2px) rotate(1deg);
+    }
+    95% {
+      transform: translateX(-1px) rotate(-0.5deg);
+    }
+    97% {
+      transform: translateX(1px) rotate(0.5deg);
+    }
+  }
+
+  /* Enhanced shake on hover */
+  .contact-button:hover .zalo-shake {
+    animation: zaloShakeHover 0.5s ease-in-out infinite;
+  }
+
+  .contact-button:hover .call-shake {
+    animation: callShakeHover 0.5s ease-in-out infinite;
+  }
+
+  /* Pause shake when not in viewport (performance optimization) */
+  .contact-buttons:not(:hover) .zalo-shake {
+    animation-play-state: running;
+  }
+
+  .contact-buttons:not(:hover) .call-shake {
+    animation-play-state: running;
+  }
+
+  /* Attention-grabbing shake for new visitors */
+  .zalo-shake.attention {
+    animation: zaloAttentionShake 2s ease-in-out 3;
+  }
+
+  .call-shake.attention {
+    animation: callAttentionShake 2s ease-in-out 3;
+  }
+
+  @keyframes zaloAttentionShake {
+    0%, 100% {
+      transform: translateX(0) rotate(0deg) scale(1);
+    }
+    10% {
+      transform: translateX(-5px) rotate(-3deg) scale(1.1);
+    }
+    20% {
+      transform: translateX(5px) rotate(3deg) scale(1.1);
+    }
+    30% {
+      transform: translateX(-4px) rotate(-2deg) scale(1.05);
+    }
+    40% {
+      transform: translateX(4px) rotate(2deg) scale(1.05);
+    }
+    50% {
+      transform: translateX(-3px) rotate(-1deg) scale(1.02);
+    }
+    60% {
+      transform: translateX(3px) rotate(1deg) scale(1.02);
+    }
+    70% {
+      transform: translateX(-2px) rotate(-0.5deg) scale(1.01);
+    }
+    80% {
+      transform: translateX(2px) rotate(0.5deg) scale(1.01);
+    }
+    90% {
+      transform: translateX(-1px) rotate(-0.2deg) scale(1);
+    }
+  }
+
+  @keyframes callAttentionShake {
+    0%, 100% {
+      transform: translateX(0) rotate(0deg) scale(1);
+    }
+    10% {
+      transform: translateX(-6px) rotate(-4deg) scale(1.15);
+    }
+    20% {
+      transform: translateX(6px) rotate(4deg) scale(1.15);
+    }
+    30% {
+      transform: translateX(-5px) rotate(-3deg) scale(1.1);
+    }
+    40% {
+      transform: translateX(5px) rotate(3deg) scale(1.1);
+    }
+    50% {
+      transform: translateX(-4px) rotate(-2deg) scale(1.05);
+    }
+    60% {
+      transform: translateX(4px) rotate(2deg) scale(1.05);
+    }
+    70% {
+      transform: translateX(-3px) rotate(-1deg) scale(1.02);
+    }
+    80% {
+      transform: translateX(3px) rotate(1deg) scale(1.02);
+    }
+    90% {
+      transform: translateX(-2px) rotate(-0.5deg) scale(1);
+    }
+  }
+
+  @keyframes zaloShakeHover {
+    0%, 100% {
+      transform: translateX(0) rotate(0deg);
+    }
+    25% {
+      transform: translateX(-3px) rotate(-2deg);
+    }
+    50% {
+      transform: translateX(3px) rotate(2deg);
+    }
+    75% {
+      transform: translateX(-2px) rotate(-1deg);
+    }
+  }
+
+  @keyframes callShakeHover {
+    0%, 100% {
+      transform: translateX(0) rotate(0deg);
+    }
+    25% {
+      transform: translateX(-4px) rotate(-3deg);
+    }
+    50% {
+      transform: translateX(4px) rotate(3deg);
+    }
+    75% {
+      transform: translateX(-2px) rotate(-1deg);
+    }
+  }
+
+  /* Icon size consistency */
+  .contact-button .zalo-shake {
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    flex-shrink: 0;
+  }
+
+  .contact-button .call-shake {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    flex-shrink: 0;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .contact-buttons {
+      bottom: 1rem;
+      right: 1rem;
+    }
+    
+    .contact-button {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .contact-button svg,
+    .contact-button .zalo-shake,
+    .contact-button .call-shake {
+      width: 1.5rem !important;
+      height: 1.5rem !important;
+    }
+  }
 }
