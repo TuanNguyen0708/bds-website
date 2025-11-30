@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {
@@ -16,6 +17,7 @@ import Link from 'next/link'
 import { getAllProjects, ProjectData } from '@/lib/projectService'
 
 const Header = () => {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [projects, setProjects] = useState<ProjectData[]>([])
   const [projectsLoading, setProjectsLoading] = useState(true)
@@ -33,6 +35,14 @@ const Header = () => {
     }
     fetchProjects()
   }, [])
+
+  // Check if we're on a project page
+  const isProjectPage = pathname?.startsWith('/projects')
+
+  // Helper function to get navigation href
+  const getNavHref = (hash: string) => {
+    return isProjectPage ? `/${hash}` : hash
+  }
 
   const navigation = [
     { name: 'Trang chủ', href: '#home' },
@@ -56,7 +66,7 @@ const Header = () => {
             {navigation.map((item) => (
               <a
                 key={item.name}
-                href={item.href}
+                href={getNavHref(item.href)}
                 className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 {item.name}
@@ -112,7 +122,7 @@ const Header = () => {
           {/* CTA Button - Desktop */}
           <div className="hidden md:flex">
             <Button className="bg-blue-600 hover:bg-blue-700">
-              <a href="#contact">Liên hệ ngay</a>
+              <a href={getNavHref('#contact')}>Liên hệ ngay</a>
             </Button>
           </div>
 
@@ -129,7 +139,7 @@ const Header = () => {
                   {navigation.map((item) => (
                     <a
                       key={item.name}
-                      href={item.href}
+                      href={getNavHref(item.href)}
                       className="text-gray-700 hover:text-blue-600 px-3 py-3 text-lg font-medium transition-colors border-b border-gray-100"
                       onClick={() => setIsOpen(false)}
                     >
@@ -175,7 +185,7 @@ const Header = () => {
                   </div>
                   <div className="pt-4">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setIsOpen(false)}>
-                      <a href="#contact">Liên hệ ngay</a>
+                      <a href={getNavHref('#contact')}>Liên hệ ngay</a>
                     </Button>
                   </div>
                 </div>
