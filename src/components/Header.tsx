@@ -1,12 +1,38 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Menu } from 'lucide-react'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu'
+import { Menu, ChevronDown } from 'lucide-react'
+import Link from 'next/link'
+import { getAllProjects, ProjectData } from '@/lib/projectService'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [projects, setProjects] = useState<ProjectData[]>([])
+  const [projectsLoading, setProjectsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const allProjects = await getAllProjects()
+        setProjects(allProjects)
+      } catch (error) {
+        console.error('Error fetching projects:', error)
+      } finally {
+        setProjectsLoading(false)
+      }
+    }
+    fetchProjects()
+  }, [])
 
   const navigation = [
     { name: 'Trang chủ', href: '#home' },
@@ -26,7 +52,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-8 items-center">
             {navigation.map((item) => (
               <a
                 key={item.name}
@@ -36,6 +62,51 @@ const Header = () => {
                 {item.name}
               </a>
             ))}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium data-[state=open]:text-blue-600">
+                    Dự án
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-[400px] p-4">
+                      {projectsLoading ? (
+                        <p className="text-sm text-gray-500 py-4 text-center">Đang tải...</p>
+                      ) : projects.length === 0 ? (
+                        <p className="text-sm text-gray-500 py-4 text-center">Không có dự án</p>
+                      ) : (
+                        <div className="grid gap-2 max-h-[400px] overflow-y-auto">
+                          {projects.map((project) => (
+                            <NavigationMenuLink key={project.id} asChild>
+                              <Link
+                                href={`/projects/${project.id}`}
+                                className="block p-3 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+                              >
+                                <div className="font-medium text-sm text-gray-900">{project.projectName}</div>
+                                {project.slogan && (
+                                  <div className="text-xs text-gray-500 mt-1 line-clamp-1">{project.slogan}</div>
+                                )}
+                                <div className="text-xs text-gray-400 mt-1">{project.location.district}, {project.location.city}</div>
+                              </Link>
+                            </NavigationMenuLink>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-4 pt-4 border-t">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/projects"
+                            className="block p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer text-center text-sm font-medium text-blue-600"
+                          >
+                            Xem tất cả dự án →
+                          </Link>
+                        </NavigationMenuLink>
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </nav>
 
           {/* CTA Button - Desktop */}
@@ -65,6 +136,43 @@ const Header = () => {
                       {item.name}
                     </a>
                   ))}
+                  {/* Projects Dropdown in Mobile */}
+                  <div className="border-b border-gray-100 pb-4">
+                    <div className="flex items-center justify-between px-3 py-3">
+                      <span className="text-gray-700 text-lg font-medium">Dự án</span>
+                      <ChevronDown className="h-5 w-5 text-gray-500" />
+                    </div>
+                    <div className="pl-4 space-y-2 max-h-[300px] overflow-y-auto">
+                      {projectsLoading ? (
+                        <p className="text-sm text-gray-500 py-2">Đang tải...</p>
+                      ) : projects.length === 0 ? (
+                        <p className="text-sm text-gray-500 py-2">Không có dự án</p>
+                      ) : (
+                        <>
+                          {projects.map((project) => (
+                            <Link
+                              key={project.id}
+                              href={`/projects/${project.id}`}
+                              className="block py-2 text-gray-600 hover:text-blue-600 transition-colors"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              <div className="font-medium text-sm">{project.projectName}</div>
+                              {project.slogan && (
+                                <div className="text-xs text-gray-400 mt-1 line-clamp-1">{project.slogan}</div>
+                              )}
+                            </Link>
+                          ))}
+                          <Link
+                            href="/projects"
+                            className="block py-2 text-blue-600 font-medium text-sm"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            Xem tất cả dự án →
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  </div>
                   <div className="pt-4">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setIsOpen(false)}>
                       <a href="#contact">Liên hệ ngay</a>
