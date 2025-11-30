@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,12 +25,10 @@ import {
   Eye,
   MapPin,
   Building,
-  Calendar,
   DollarSign,
   Search
 } from "lucide-react";
 import { getProjects, ProjectData, ProjectFilterOptions } from "@/lib/projectService";
-import ProjectDetailDialog from "./ProjectDetailDialog";
 import { Badge } from "@/components/ui/badge";
 
 // Debounce hook
@@ -50,6 +49,7 @@ const useDebounce = <T,>(value: T, delay: number): T => {
 };
 
 const ProjectTable = () => {
+  const router = useRouter();
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -73,8 +73,6 @@ const ProjectTable = () => {
   
   // UI state
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
-  const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
 
   // Debounce filters
   const debouncedFilters = useDebounce(filters, 500);
@@ -139,13 +137,7 @@ const ProjectTable = () => {
   };
 
   const handleViewProject = (project: ProjectData) => {
-    setSelectedProject(project);
-    setIsDetailDialogOpen(true);
-  };
-
-  const closeDetailDialog = () => {
-    setIsDetailDialogOpen(false);
-    setSelectedProject(null);
+    router.push(`/projects/${project.id}`);
   };
 
   const totalPages = useMemo(() => Math.ceil(total / pageSize), [total, pageSize]);
@@ -319,83 +311,95 @@ const ProjectTable = () => {
         </Card>
       )}
 
-      {/* Projects Table */}
+      {/* Projects Card List */}
       {!loading && !error && (
-        <Card>
-          <CardContent className="pt-6">
-            {projects.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
-                Không tìm thấy dự án nào
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Tên dự án</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Vị trí</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Chủ đầu tư</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Trạng thái</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Giá</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {projects.map((project) => (
-                      <tr key={project.id} className="border-b hover:bg-gray-50">
-                        <td className="py-4 px-4">
-                          <div>
-                            <div className="font-medium text-gray-900">{project.projectName}</div>
-                            {project.slogan && (
-                              <div className="text-sm text-gray-500 mt-1">{project.slogan.substring(0, 50)}...</div>
-                            )}
-                          </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4 text-gray-400" />
-                            <div>
-                              <div className="text-gray-900">{project.location.district || project.location.city}</div>
-                              <div className="text-gray-500 text-xs">{project.location.address.substring(0, 30)}...</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <div className="flex items-center gap-2 text-sm">
-                            <Building className="h-4 w-4 text-gray-400" />
-                            <div className="text-gray-700">{project.investor.substring(0, 30)}...</div>
-                          </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <Badge variant={project.legalStatus === "Đang mở bán" ? "default" : "secondary"}>
-                            {project.legalStatus}
-                          </Badge>
-                        </td>
-                        <td className="py-4 px-4">
-                          <div className="flex items-center gap-2 text-sm">
-                            <DollarSign className="h-4 w-4 text-gray-400" />
-                            <div className="text-gray-700">{project.pricing.pricePerSqm || "N/A"}</div>
-                          </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleViewProject(project)}
-                            className="flex items-center gap-2"
-                          >
-                            <Eye className="h-4 w-4" />
-                            Xem chi tiết
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        <>
+          {projects.length === 0 ? (
+            <Card>
+              <CardContent className="pt-6">
+                <div className="text-center py-8 text-gray-500">
+                  Không tìm thấy dự án nào
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project) => (
+                <Card 
+                  key={project.id} 
+                  className="hover:shadow-lg transition-shadow duration-200 flex flex-col"
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+                          {project.projectName}
+                        </CardTitle>
+                        {project.slogan && (
+                          <p className="text-sm text-gray-600 line-clamp-2 mt-1">
+                            {project.slogan}
+                          </p>
+                        )}
+                      </div>
+                      <Badge 
+                        variant={project.legalStatus === "Đang mở bán" ? "default" : "secondary"}
+                        className="shrink-0"
+                      >
+                        {project.legalStatus}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="flex-1 flex flex-col gap-4">
+                    {/* Location */}
+                    <div className="flex items-start gap-2">
+                      <MapPin className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-gray-900">
+                          {project.location.district || project.location.city}
+                        </div>
+                        <div className="text-xs text-gray-500 line-clamp-1 mt-0.5">
+                          {project.location.address}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Investor */}
+                    <div className="flex items-start gap-2">
+                      <Building className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                      <div className="text-sm text-gray-700 line-clamp-1">
+                        {project.investor}
+                      </div>
+                    </div>
+
+                    {/* Price */}
+                    {project.pricing.pricePerSqm && (
+                      <div className="flex items-center gap-2">
+                        <DollarSign className="h-4 w-4 text-gray-400 shrink-0" />
+                        <div className="text-sm font-semibold text-gray-900">
+                          {project.pricing.pricePerSqm}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Action Button */}
+                    <div className="mt-auto pt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleViewProject(project)}
+                        className="w-full flex items-center justify-center gap-2"
+                      >
+                        <Eye className="h-4 w-4" />
+                        Xem chi tiết
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       {/* Pagination */}
@@ -466,13 +470,6 @@ const ProjectTable = () => {
           </div>
         </div>
       )}
-
-      {/* Project Detail Dialog */}
-      <ProjectDetailDialog
-        project={selectedProject}
-        isOpen={isDetailDialogOpen}
-        onClose={closeDetailDialog}
-      />
     </div>
   );
 };

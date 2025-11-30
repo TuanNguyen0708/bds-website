@@ -421,10 +421,10 @@ export default function ProjectDetailContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {project.amenities.internal.length > 0 && (
                   <div>
-                    <p className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <div className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                       Tiện ích nội khu
-                    </p>
+                    </div>
                     <div className="flex flex-wrap gap-3">
                       {project.amenities.internal.map((amenity, idx) => (
                         <Badge 
@@ -440,10 +440,10 @@ export default function ProjectDetailContent() {
                 )}
                 {project.amenities.external.length > 0 && (
                   <div>
-                    <p className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <div className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       Tiện ích ngoại khu
-                    </p>
+                    </div>
                     <div className="flex flex-wrap gap-3">
                       {project.amenities.external.map((amenity, idx) => (
                         <Badge 
